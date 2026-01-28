@@ -1,15 +1,15 @@
 import 'package:e_commerce_app/features/auth/presentation/views/register_view.dart';
 import 'package:e_commerce_app/features/auth/presentation/views/sign_up_view.dart';
 import 'package:e_commerce_app/features/cart/presentation/views/cart_view.dart';
-import 'package:e_commerce_app/features/categories/presentation/views/categories_view.dart';
 import 'package:e_commerce_app/features/checkout/presentation/views/checkout_view.dart';
+import 'package:e_commerce_app/features/home/presentation/views/home_view.dart';
 import 'package:e_commerce_app/features/products/presentation/views/products_view.dart';
 import 'package:e_commerce_app/features/splash/presentation/views/splash_view.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRouter {
   static const String initialRoute = '/';
-  static const String categoriesRoute = '/categories';
+  static const String homeRoute = '/home';
   static const String productsRoute = '/products';
   static const String cartRoute = '/cart';
   static const String regsiterRoute = '/register';
@@ -21,10 +21,7 @@ class AppRouter {
         path: initialRoute,
         builder: (context, state) => const SplashView(),
       ),
-      GoRoute(
-        path: categoriesRoute,
-        builder: (context, state) => const CategoriesView(),
-      ),
+      GoRoute(path: homeRoute, builder: (context, state) => const HomeView()),
       GoRoute(
         path: productsRoute,
         builder: (context, state) => const ProductsView(),
