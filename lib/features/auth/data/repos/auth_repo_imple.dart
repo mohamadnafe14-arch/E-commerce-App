@@ -4,16 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AuthRepoImple implements AuthRepo {
   final FirebaseAuth firebaseAuth;
   User? user;
-  AuthRepoImple({required this.firebaseAuth});
-  @override
-  User? getUserData() {
-    return user;
-  }
-
-  @override
-  bool isLoggedIn() {
-    return user != null;
-  }
+  AuthRepoImple({required this.firebaseAuth});  
+ 
 
   @override
   Future<void> login({required String email, required String password}) async {
@@ -38,11 +30,5 @@ class AuthRepoImple implements AuthRepo {
     this.user = user;
   }
 
-  @override
-  Future<void> googleLogin() async {
-    UserCredential userCredential = await firebaseAuth.signInWithPopup(
-      GoogleAuthProvider(),
-    );
-    user = userCredential.user;
-  }
+
 }

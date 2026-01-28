@@ -11,8 +11,5 @@ abstract class AuthRepo{
     required User user,
     required String password
   });
-  bool isLoggedIn();
   Future<void> logout();
-  User? getUserData();
-  Future<void> googleLogin();
 }
