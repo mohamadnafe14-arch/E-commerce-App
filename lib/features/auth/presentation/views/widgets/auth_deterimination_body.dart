@@ -90,7 +90,10 @@ class _AuthDeteriminationBodyState extends State<AuthDeteriminationBody> {
               } else if (state is AuthSuccess) {
                 isLoading = false;
                 setState(() {});
-                GoRouter.of(context).push(AppRouter.homeRoute);
+                GoRouter.of(context).push(
+                  AppRouter.homeRoute,
+                  extra: BlocProvider.of<AuthCubit>(context).getCurrentUser()!,
+                );
               } else if (state is AuthError) {
                 isLoading = false;
                 setState(() {});

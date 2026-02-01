@@ -5,15 +5,14 @@ import 'package:e_commerce_app/features/auth/presentation/views/auth_determinato
 import 'package:e_commerce_app/features/auth/presentation/views/forget_password_view.dart';
 import 'package:e_commerce_app/features/cart/presentation/views/cart_view.dart';
 import 'package:e_commerce_app/features/checkout/presentation/views/checkout_view.dart';
-import 'package:e_commerce_app/features/home/presentation/views/home_view.dart';
-import 'package:e_commerce_app/features/products/presentation/views/products_view.dart';
+import 'package:e_commerce_app/features/products/presentation/views/home_view.dart';
 import 'package:e_commerce_app/features/auth/presentation/splash_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRouter {
   static const String initialRoute = '/';
   static const String homeRoute = '/home';
-  static const String productsRoute = '/products';
   static const String cartRoute = '/cart';
   static const String signInRoute = '/signIn';
   static const String signUpRoute = '/signUp';
@@ -27,11 +26,14 @@ class AppRouter {
         path: initialRoute,
         builder: (context, state) => const SplashView(),
       ),
-      GoRoute(path: homeRoute, builder: (context, state) => const HomeView()),
       GoRoute(
-        path: productsRoute,
-        builder: (context, state) => const ProductsView(),
+        path: homeRoute,
+        builder: (context, state) {
+          final User user = state.extra as User;
+          return HomeView(currentUser: user);
+        },
       ),
+
       GoRoute(path: cartRoute, builder: (context, state) => const CartView()),
       GoRoute(
         path: checkoutRoute,

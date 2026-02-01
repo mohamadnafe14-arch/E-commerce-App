@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce_app/features/auth/data/repos/auth_repo.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 part 'auth_state.dart';
 
@@ -50,4 +51,5 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthError(message: e.toString()));
     }
   }
+  User? getCurrentUser() => authRepo.getCurrentUser();
 }

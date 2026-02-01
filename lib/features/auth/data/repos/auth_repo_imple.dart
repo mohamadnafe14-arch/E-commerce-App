@@ -56,4 +56,7 @@ class AuthRepoImple implements AuthRepo {
   Future<void> forgotPassword({required String email}) async {
     await firebaseAuth.sendPasswordResetEmail(email: email);
   }
+
+  @override
+  User? getCurrentUser() => firebaseAuth.currentUser;
 }

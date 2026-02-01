@@ -2,3 +2,7 @@ const kFirstPage = 'assest/images/first_page.svg';
 const kSecondPage = 'assest/images/second_page.svg';
 const kThirdPage = 'assest/images/third_page.svg';
 const kPlaceHolder = 'assest/images/place_holder.svg';
+const kfirstFakePage = 'assest/images/first_fake_page.png';
+const ksecondFakePage = 'assest/images/second_fake_page.png';
+const kthirdFakePage = 'assest/images/third_fake_page.png';
+const kBanner = 'assest/images/banner.jpeg';

@@ -28,7 +28,10 @@ class _SignInBodyState extends State<SignInBody> {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthSuccess) {
-          GoRouter.of(context).push(AppRouter.homeRoute);
+          GoRouter.of(context).push(
+            AppRouter.homeRoute,
+            extra: BlocProvider.of<AuthCubit>(context).getCurrentUser()!,
+          );
         } else if (state is AuthError) {
           ScaffoldMessenger.of(
             context,
@@ -108,7 +111,7 @@ class _SignInBodyState extends State<SignInBody> {
                   SizedBox(height: 20.h),
                   TextButton(
                     onPressed: () {
-                      GoRouter.of(context).push(AppRouter.forgetPasswordRoute); 
+                      GoRouter.of(context).push(AppRouter.forgetPasswordRoute);
                     },
                     child: Text(
                       "Forgot password?",

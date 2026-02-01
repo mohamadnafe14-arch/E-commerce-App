@@ -29,7 +29,10 @@ class _SignUpBodyState extends State<SignUpBody> {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthSuccess) {
-          GoRouter.of(context).push(AppRouter.homeRoute);
+          GoRouter.of(context).push(
+            AppRouter.homeRoute,
+            extra: BlocProvider.of<AuthCubit>(context).getCurrentUser()!,
+          );
         } else if (state is AuthError) {
           ScaffoldMessenger.of(
             context,

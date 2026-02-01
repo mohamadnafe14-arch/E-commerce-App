@@ -14,92 +14,88 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ProductsViewBody extends StatelessWidget {
-  const ProductsViewBody({super.key});
+class ProductsSlivers extends StatelessWidget {
+  const ProductsSlivers({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.w),
-      child: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(child: FakePictures()),
-          SliverToBoxAdapter(child: SizedBox(height: 50.h)),
-          SliverToBoxAdapter(
-            child: Text(
-              "Categories",
-              style: TextStyles.textStyle28Bold(Colors.black),
-            ),
+    return SliverList(
+      delegate: SliverChildListDelegate(
+        [
+          FakePictures(),
+          SizedBox(height: 50.h),
+
+          Text(
+            "Categories",
+            style: TextStyles.textStyle28Bold(Colors.black),
           ),
-          SliverToBoxAdapter(child: SizedBox(height: 20.h)),
-          SliverToBoxAdapter(child: CategoryList()),
-          SliverToBoxAdapter(child: SizedBox(height: 50.h)),
-          SliverToBoxAdapter(
-            child: Text(
-              "Recommenditions",
-              style: TextStyles.textStyle28Bold(Colors.black),
-            ),
+          SizedBox(height: 20.h),
+          CategoryList(),
+          SizedBox(height: 50.h),
+
+          Text(
+            "Recommenditions",
+            style: TextStyles.textStyle28Bold(Colors.black),
           ),
-          SliverToBoxAdapter(child: SizedBox(height: 50.h)),
+          SizedBox(height: 50.h),
+
           BlocBuilder<ProductsCubit, ProductsState>(
             builder: (context, state) {
               if (state is ProductsLoading) {
-                return SliverFillRemaining(child: ProductLoadingBody());
+                return ProductLoadingBody();
               } else if (state is ProductsLoaded) {
                 return ProductCategoriesSuccessBody(
                   products: state.productsList,
                 );
               } else if (state is ProductsError) {
-                return SliverToBoxAdapter(
-                  child: ProductFailBody(message: state.message),
-                );
+                return ProductFailBody(message: state.message);
               }
-              return SliverToBoxAdapter(child: const SizedBox());
+              return const SizedBox();
             },
           ),
-          SliverToBoxAdapter(child: SizedBox(height: 50.h)),
-          SliverToBoxAdapter(child: Image.asset(kBanner)),
-          SliverToBoxAdapter(child: SizedBox(height: 50.h)),
-          SliverToBoxAdapter(
-            child: Text(
-              "Best Sellers",
-              style: TextStyles.textStyle28Bold(Colors.black),
-            ),
+
+          SizedBox(height: 50.h),
+          Image.asset(kBanner),
+          SizedBox(height: 50.h),
+
+          Text(
+            "Best Sellers",
+            style: TextStyles.textStyle28Bold(Colors.black),
           ),
+
           BlocBuilder<BestSellerCubit, BestSellerCubitState>(
             builder: (context, state) {
               if (state is BestSellerCubitLoading) {
-                return SliverFillRemaining(child: ProductLoadingBody());
+                return ProductLoadingBody();
               } else if (state is BestSellerCubitLoaded) {
                 return BestSellerSuccessBody(products: state.products);
               } else if (state is BestSellerCubitError) {
-                return SliverToBoxAdapter(
-                  child: ProductFailBody(message: state.message),
-                );
+                return ProductFailBody(message: state.message);
               }
-              return SliverToBoxAdapter(child: const SizedBox());
+              return const SizedBox();
             },
           ),
-          SliverToBoxAdapter(child: SizedBox(height: 50.h)),
-          SliverToBoxAdapter(
-            child: Text(
-              "Top reted",
-              style: TextStyles.textStyle28Bold(Colors.black),
-            ),
+
+          SizedBox(height: 50.h),
+
+          Text(
+            "Top Rated",
+            style: TextStyles.textStyle28Bold(Colors.black),
           ),
-          SliverToBoxAdapter(child: SizedBox(height: 50.h)),
+          SizedBox(height: 50.h),
+
           BlocBuilder<AllProductsCubit, AllProductsState>(
             builder: (context, state) {
               if (state is AllProductsLoading) {
-                return SliverFillRemaining(child: ProductLoadingBody());
+                return ProductLoadingBody();
               } else if (state is AllProductsLoaded) {
-                return ProductSuccessBody(productsList: state.productsList);
-              } else if (state is AllProductsError) {
-                return SliverToBoxAdapter(
-                  child: ProductFailBody(message: state.message),
+                return ProductSuccessBody(
+                  productsList: state.productsList,
                 );
+              } else if (state is AllProductsError) {
+                return ProductFailBody(message: state.message);
               }
-              return SliverToBoxAdapter(child: const SizedBox());
+              return const SizedBox();
             },
           ),
         ],
@@ -107,3 +103,4 @@ class ProductsViewBody extends StatelessWidget {
     );
   }
 }
+

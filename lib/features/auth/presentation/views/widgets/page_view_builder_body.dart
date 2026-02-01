@@ -80,7 +80,10 @@ class _PageViewBuilderBodyState extends State<PageViewBuilderBody> {
 
   Future<Object?> goToNextPage(BuildContext context) {
     return BlocProvider.of<AuthCubit>(context).isLoggedIn()
-        ? GoRouter.of(context).push(AppRouter.homeRoute)
+        ? GoRouter.of(context).push(
+            AppRouter.homeRoute,
+            extra: BlocProvider.of<AuthCubit>(context).getCurrentUser()!,
+          )
         : GoRouter.of(context).push(AppRouter.authDeterminatorRoute);
   }
 }
