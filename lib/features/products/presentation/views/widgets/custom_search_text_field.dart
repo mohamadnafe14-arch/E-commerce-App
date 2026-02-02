@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomSearchTextField extends StatelessWidget {
-  const CustomSearchTextField({super.key, this.onChanged});
+  const CustomSearchTextField({super.key, this.onChanged, this.onTap});
   final void Function(String)? onChanged;
+  final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -17,6 +18,10 @@ class CustomSearchTextField extends StatelessWidget {
         hint: Text(
           'Search for products',
           style: TextStyles.textStyle16Regular(Colors.grey),
+        ),
+        suffixIcon: GestureDetector(
+          onTap: onTap,
+          child: Icon(Icons.filter_list, color: Colors.grey),
         ),
       ),
     );

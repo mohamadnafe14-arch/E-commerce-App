@@ -79,7 +79,7 @@ class _HomeViewState extends State<HomeView> {
           ),
           body: IndexedStack(
             index: currentIndex,
-            children: const [
+            children:  [
               ProductsViewBody(),
               FavouriteProducts(),
               SearchProduct(),

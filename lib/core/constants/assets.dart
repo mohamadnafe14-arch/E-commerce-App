@@ -6,3 +6,4 @@ const kfirstFakePage = 'assest/images/first_fake_page.png';
 const ksecondFakePage = 'assest/images/second_fake_page.png';
 const kthirdFakePage = 'assest/images/third_fake_page.png';
 const kBanner = 'assest/images/banner.jpeg';
+const kEmoji = 'assest/images/emoji.png';

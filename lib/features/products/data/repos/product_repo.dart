@@ -8,6 +8,9 @@ abstract class ProductRepo {
   });
   Future<Either<Failuer, List<ProductModel>>> searchProducts({
     required String query,
+    required String? category,
+    required double minmumPrice,
+    required double maximumPrice,
   });
   Future<Either<Failuer, List<ProductModel>>> getAllProducts();
   Future<Either<Failuer, ProductModel>> getProductById({required String id});

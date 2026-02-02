@@ -73,26 +73,36 @@ class ProductRepoImple implements ProductRepo {
   @override
   Future<Either<Failuer, List<ProductModel>>> searchProducts({
     required String query,
+    required String? category,
+    required double minmumPrice,
+    required double maximumPrice,
   }) async {
     try {
       final List response = await apiService.get('/products');
-      List<ProductModel> productsList = response
+      final productsList = response
           .map<ProductModel>(
             (json) => ProductModel.fromJson(json as Map<String, dynamic>),
           )
           .toList();
-      return Right(
-        query.isEmpty
-            ? productsList
-            : productsList
-                  .where(
-                    (element) => element.title!.toLowerCase().contains(
-                      query.toLowerCase(),
-                    ),
-                  )
-                  .toList(),
+      final List<String> categoryList = category != null
+          ? category.split(',').map((e) => e.toLowerCase()).toList()
+          : [];    
+      productsList.removeWhere(
+        (element) =>
+            element.price! < minmumPrice || element.price! > maximumPrice,
       );
-    } catch (e) {
+      productsList.removeWhere(
+        (element) =>
+            !element.title!.toLowerCase().contains(query.toLowerCase()),
+      );
+      if (category != null) {
+        productsList.removeWhere(
+          (element) =>
+              !categoryList.contains(element.category!.toLowerCase()),
+        );
+      }
+      return Right(productsList);
+    } on Exception catch (e) {
       if (e is DioException) {
         return Left(ServerFailuer.fromDioError(dioException: e));
       } else {

@@ -37,19 +37,7 @@ class ProductsCubit extends Cubit<ProductsState> {
     );
   }
 
-  Future<void> searchProducts({required String query}) async {
-    emit(ProductsLoading());
-    final result = await productRepo.searchProducts(query: query);
-    result.fold(
-      (failure) {
-        emit(ProductsError(message: failure.message));
-      },
-      (products) {
-        productsList = products;
-        emit(ProductsLoaded(productsList: productsList));
-      },
-    );
-  }
+
 
   Future<void> getProductById({required String id}) async {
     emit(ProductsLoading());
