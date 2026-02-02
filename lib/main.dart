@@ -4,6 +4,7 @@ import 'package:e_commerce_app/features/products/data/models/product_model/produ
 import 'package:e_commerce_app/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -14,6 +15,7 @@ void main() async {
   Hive.registerAdapter(ProductModelHiveAdapter());
   await Hive.openBox<ProductModelHive>('products');
   setupServiceLocator();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const ECommerceApp());
 }
 

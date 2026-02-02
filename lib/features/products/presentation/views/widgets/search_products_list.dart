@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/core/styles/text_styles.dart';
+import 'package:e_commerce_app/features/product_details/presentation/views/product_details_view.dart';
 import 'package:e_commerce_app/features/products/data/models/product_model/product_model.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +11,14 @@ class SearchProductsList extends StatelessWidget {
     return SliverList.builder(
       itemCount: products.length,
       itemBuilder: (context, index) {
-        return GestureDetector(
+        return InkWell(
           onTap: () {
-            
+            Navigator.of(context, rootNavigator: true).push(
+              MaterialPageRoute(
+                builder: (context) =>
+                    ProductDetailsView(product: products[index]),
+              ),
+            );
           },
           child: Column(
             children: [

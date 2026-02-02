@@ -4,7 +4,8 @@ import 'package:e_commerce_app/features/auth/presentation/page_view_builder_view
 import 'package:e_commerce_app/features/auth/presentation/views/auth_determinator_view.dart';
 import 'package:e_commerce_app/features/auth/presentation/views/forget_password_view.dart';
 import 'package:e_commerce_app/features/cart/presentation/views/cart_view.dart';
-import 'package:e_commerce_app/features/checkout/presentation/views/checkout_view.dart';
+import 'package:e_commerce_app/features/product_details/presentation/views/product_details_view.dart';
+import 'package:e_commerce_app/features/products/data/models/product_model/product_model.dart';
 import 'package:e_commerce_app/features/products/presentation/views/home_view.dart';
 import 'package:e_commerce_app/features/auth/presentation/splash_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,10 +17,10 @@ class AppRouter {
   static const String cartRoute = '/cart';
   static const String signInRoute = '/signIn';
   static const String signUpRoute = '/signUp';
-  static const String checkoutRoute = '/checkout';
   static const String pageViewBuilderRoute = '/pageViewBuilder';
   static const String authDeterminatorRoute = '/authDeterminator';
   static const String forgetPasswordRoute = '/forgetPassword';
+  static const String productDetailsRoute = '/productDetails';
   static final router = GoRouter(
     routes: [
       GoRoute(
@@ -35,10 +36,7 @@ class AppRouter {
       ),
 
       GoRoute(path: cartRoute, builder: (context, state) => const CartView()),
-      GoRoute(
-        path: checkoutRoute,
-        builder: (context, state) => const CheckoutView(),
-      ),
+
       GoRoute(path: signInRoute, builder: (context, state) => const SignIn()),
       GoRoute(
         path: signUpRoute,
@@ -55,6 +53,13 @@ class AppRouter {
       GoRoute(
         path: forgetPasswordRoute,
         builder: (context, state) => const ForgetPasswordView(),
+      ),
+      GoRoute(
+        path: productDetailsRoute,
+        builder: (context, state) {
+          final ProductModel productModel = state.extra as ProductModel;
+          return ProductDetailsView(product: productModel);
+        },
       ),
     ],
   );

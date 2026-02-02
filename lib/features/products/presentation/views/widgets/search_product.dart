@@ -42,7 +42,7 @@ class SearchProduct extends StatelessWidget {
                         context: context,
                         barrierDismissible: true,
                         builder: (dialogContext) => BlocProvider.value(
-                          value: searchCubit, // ← عدّي الـ cubit للـ dialog
+                          value: searchCubit, 
                           child: CustomDialog(
                             onConfirm: () {
                               searchCubit.changeQuery(query: query);

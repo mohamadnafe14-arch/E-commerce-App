@@ -20,12 +20,3 @@ final class ProductsError extends ProductsState {
   final String message;
   const ProductsError({required this.message});
 }
-final class ProductsFavouriteLoaded extends ProductsState {
-  final List<ProductModel> favouriteProductsList;
-  const ProductsFavouriteLoaded({required this.favouriteProductsList});
-}
-final class ProductsFavouriteError extends ProductsState {
-  final String message;
-  const ProductsFavouriteError({required this.message});
-}
-final class ProductsFavouriteLoading extends ProductsState {}
