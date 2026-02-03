@@ -1,35 +1,51 @@
-import 'package:e_commerce_app/features/cart/data/models/cart_item_model.dart';
-
-class CartModel {
-  final int id;
-  final int userId;
-  final String date;
-  final List<CartItemModel> items;
-
+import 'package:e_commerce_app/features/products/data/models/product_model/product_model.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+part 'cart_model.g.dart';
+@HiveType(typeId: 1)
+class CartModel extends HiveObject {
+  @HiveField(0)
+  int? id;
+  @HiveField(1)
+  String? title;
+  @HiveField(2)
+  double? price;
+  @HiveField(3)
+  String? description;
+  @HiveField(4)
+  String? category;
+  @HiveField(5)
+  String? image;
+  @HiveField(6)
+  double? rate;
+  @HiveField(7)
+  int? count;
+  @HiveField(8)
+  int? quantity;
   CartModel({
     required this.id,
-    required this.userId,
-    required this.date,
-    required this.items,
+    required this.title,
+    required this.price,
+    required this.description,
+    required this.category,
+    required this.image,
+    required this.rate,
+    required this.count,
+    required this.quantity,
   });
-
-  factory CartModel.fromJson(Map<String, dynamic> json) {
+  factory CartModel.fromProductModel({
+    required ProductModel productModel,
+    required int quantity,
+  }) {
     return CartModel(
-      id: json['id'],
-      userId: json['userId'],
-      date: json['date'],
-      items: (json['products'] as List)
-          .map((e) => CartItemModel.fromJson(e))
-          .toList(),
+      id: productModel.id,
+      title: productModel.title,
+      price: productModel.price,
+      description: productModel.description,
+      category: productModel.category,
+      image: productModel.image,
+      rate: productModel.rating?.rate,
+      count: productModel.rating?.count,
+      quantity: quantity,
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'userId': userId,
-      'date': date,
-      'products': items.map((e) => e.toJson()).toList(),
-    };
   }
 }

@@ -19,5 +19,5 @@ void setupServiceLocator() {
   getIt.registerSingleton<Dio>(Dio());
   getIt.registerSingleton<ApiService>(ApiService(dio: getIt<Dio>()));
   getIt.registerSingleton<ProductRepo>(ProductRepoImple(getIt<ApiService>()));
-  getIt.registerSingleton<CartRepo>(CartRepoImpl(getIt<ApiService>()));
+  getIt.registerSingleton<CartRepo>(CartRepoImpl());
 }

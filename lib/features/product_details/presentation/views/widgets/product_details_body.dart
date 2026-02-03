@@ -1,15 +1,21 @@
 import 'package:e_commerce_app/core/styles/text_styles.dart';
 import 'package:e_commerce_app/features/auth/presentation/views/widgets/custom_button.dart';
-import 'package:e_commerce_app/features/product_details/presentation/views/widgets/bloc_provider_related_products.dart';
+import 'package:e_commerce_app/features/cart/presentation/manager/cart_cubit/cart_cubit.dart';
+import 'package:e_commerce_app/features/product_details/presentation/views/widgets/quantity_counter.dart';
+import 'package:e_commerce_app/features/product_details/presentation/views/widgets/related_products.dart';
 import 'package:e_commerce_app/features/products/data/models/product_model/product_model.dart';
 import 'package:e_commerce_app/features/products/presentation/manager/favourite_cubit/favourite_products_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+// ignore: must_be_immutable
 class ProductDetailsBody extends StatelessWidget {
-  const ProductDetailsBody({super.key, required this.product});
+  ProductDetailsBody({super.key, required this.product, required this.pop});
   final ProductModel product;
+  final VoidCallback? pop;
+  int quantity = 1;
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -35,6 +41,17 @@ class ProductDetailsBody extends StatelessWidget {
             Text(
               product.title ?? "No Title",
               style: TextStyles.textStyle28Bold(Colors.black),
+            ),
+            SizedBox(height: 10.h),
+            QuantityCounter(
+              onIncrement: () {
+                quantity++;
+              },
+              onDecrement: () {
+                if (quantity > 1) {
+                  quantity--;
+                }
+              },
             ),
             SizedBox(height: 10.h),
             Row(
@@ -96,15 +113,28 @@ class ProductDetailsBody extends StatelessWidget {
               style: TextStyles.textStyle28Bold(Colors.black),
             ),
             SizedBox(height: 20.h),
-            BlocProviderRelatedProducts(category: product.category!),
+            RelatedProducts(category: product.category ?? ""),
             SizedBox(height: 30.h),
             Row(
               children: [
                 Expanded(
                   child: CustomButton(
                     text: "Add to Cart",
-                    onPressed: () {
-                      // Add to cart functionality
+                    onPressed: () async {
+                      // ignore: use_build_context_synchronously
+                      BlocProvider.of<CartCubit>(context).addProductToCart(
+                        product: product,
+                        quantity: quantity,
+                      );
+                      // ignore: use_build_context_synchronously
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            "${product.title} added to cart",
+                          ),
+                        ),
+                      );
+                      pop!();
                     },
                     light: true,
                   ),

@@ -1,9 +1,8 @@
 import 'package:e_commerce_app/core/utils/service_locator.dart';
+import 'package:e_commerce_app/features/cart/presentation/views/cart_view.dart';
 import 'package:e_commerce_app/features/products/data/repos/product_repo.dart';
 import 'package:e_commerce_app/features/products/presentation/manager/all_products_cubit/all_products_cubit.dart';
 import 'package:e_commerce_app/features/products/presentation/manager/best_seller_cubit/best_seller_cubit.dart';
-import 'package:e_commerce_app/features/products/presentation/manager/favourite_cubit/favourite_products_cubit.dart';
-import 'package:e_commerce_app/features/products/presentation/manager/products_cubit/products_cubit.dart';
 import 'package:e_commerce_app/features/products/presentation/views/widgets/favourite_products.dart';
 import 'package:e_commerce_app/features/products/presentation/views/widgets/products_view_body.dart';
 import 'package:e_commerce_app/features/products/presentation/views/widgets/search_product.dart';
@@ -27,22 +26,13 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<ProductsCubit>(
+        BlocProvider<AllProductsCubit>(
           create: (context) =>
-              ProductsCubit(getIt.get<ProductRepo>())..getAllProducts(),
-        ),
-        BlocProvider<FavouriteProductsCubit>(
-          create: (context) =>
-              FavouriteProductsCubit(getIt.get<ProductRepo>())
-                ..getFavouriteProducts(),
+              AllProductsCubit(getIt.get<ProductRepo>())..getTopRated(),
         ),
         BlocProvider<BestSellerCubit>(
           create: (context) =>
               BestSellerCubit(getIt.get<ProductRepo>())..getBestSellers(),
-        ),
-        BlocProvider(
-          create: (context) =>
-              AllProductsCubit(getIt.get<ProductRepo>())..getTopRated(),
         ),
       ],
       child: SafeArea(
@@ -79,14 +69,22 @@ class _HomeViewState extends State<HomeView> {
           ),
           body: IndexedStack(
             index: currentIndex,
-            children:  [
+            children: [
               ProductsViewBody(),
               FavouriteProducts(),
               SearchProduct(),
+              CartView(),
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: currentIndex,
+            type: BottomNavigationBarType.fixed,
+            showSelectedLabels: true,
+            showUnselectedLabels: false,
+
+            selectedItemColor: Colors.black,
+            unselectedItemColor: Colors.grey,
+
             onTap: (index) {
               setState(() {
                 currentIndex = index;
@@ -101,6 +99,10 @@ class _HomeViewState extends State<HomeView> {
               BottomNavigationBarItem(
                 icon: Icon(Icons.search),
                 label: 'Search',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.shopping_cart),
+                label: 'Cart',
               ),
             ],
           ),

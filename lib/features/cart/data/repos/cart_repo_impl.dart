@@ -1,56 +1,52 @@
-import 'package:e_commerce_app/core/utils/api_service.dart';
-import 'package:e_commerce_app/features/cart/data/models/cart_item_model.dart';
 import 'package:e_commerce_app/features/cart/data/models/cart_model.dart';
 import 'package:e_commerce_app/features/cart/data/repos/cart_repo.dart';
+import 'package:e_commerce_app/features/products/data/models/product_model/product_model.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class CartRepoImpl implements CartRepo {
-  final ApiService apiService;
-  CartRepoImpl(this.apiService);
   @override
   Future<void> addToCart({
-    required int userId,
-    required CartItemModel item,
+    required int quantity,
+    required ProductModel product,
   }) async {
-    final cart = await apiService.get('/cart/$userId');
-    final CartModel cartModel = CartModel.fromJson(cart);
-    cartModel.items.add(item);
-    await apiService.post('/cart/$userId', cartModel.toJson());
+    final box = Hive.box<CartModel>('cartBox');
+    final cartItem = CartModel.fromProductModel(
+      productModel: product,
+      quantity: quantity,
+    );
+    box.put(product.id, cartItem);
   }
 
   @override
-  Future<void> clearCart({required int userId}) async {
-    final cart = await apiService.get('/cart/$userId');
-    final CartModel cartModel = CartModel.fromJson(cart);
-    cartModel.items.clear();
-    await apiService.post('/cart/$userId', cartModel.toJson());
+  Future<void> clearCart() async {
+    final box = Hive.box<CartModel>('cartBox');
+    await box.clear();
   }
 
   @override
-  Future<CartModel> getCart({required int userId}) async {
-    final cart = await apiService.get('/cart/$userId');
-    return CartModel.fromJson(cart);
+  Future<List<CartModel>> getCart() async {
+    final box = Hive.box<CartModel>('cartBox');
+    return box.values.toList();
   }
 
   @override
   Future<void> removeFromCart({
-    required int userId,
     required int productId,
   }) async {
-    await apiService.delete('/cart/$userId/$productId');
+    final box = Hive.box<CartModel>('cartBox');
+    await box.delete(productId);
   }
 
   @override
   Future<void> updateQuantity({
-    required int userId,
-    required int productId,
+    required CartModel product,
     required int quantity,
   }) async {
-    final cart = await apiService.get('/cart/$userId');
-    final CartModel cartModel = CartModel.fromJson(cart);
-    cartModel.items
-            .firstWhere((element) => element.productId == productId)
-            .quantity =
-        quantity;
-    await apiService.post('/cart/$userId', cartModel.toJson());
+    final box = Hive.box<CartModel>('cartBox');
+    final cartItem = box.get(product.id);
+    if (cartItem != null) {
+      cartItem.quantity = quantity;
+      await box.put(product.id, cartItem);
+    }
   }
 }

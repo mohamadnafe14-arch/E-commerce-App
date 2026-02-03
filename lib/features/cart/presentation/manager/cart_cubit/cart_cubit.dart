@@ -1,62 +1,62 @@
 import 'package:bloc/bloc.dart';
-import 'package:e_commerce_app/features/cart/data/models/cart_item_model.dart';
 import 'package:e_commerce_app/features/cart/data/models/cart_model.dart';
 import 'package:e_commerce_app/features/cart/data/repos/cart_repo.dart';
+import 'package:e_commerce_app/features/products/data/models/product_model/product_model.dart';
 import 'package:equatable/equatable.dart';
 
 part 'cart_state.dart';
 
 class CartCubit extends Cubit<CartState> {
   final CartRepo cartRepo;
-  CartCubit(this.cartRepo) : super(CartInitial());
-  Future<void> getCartProducts({required int userId}) async {
+  CartCubit({required this.cartRepo})
+    : super(CartInitial());
+  Future<void> getCartProducts() async {
     emit(CartLoading());
     try {
-      final cartModel = await cartRepo.getCart(userId: userId);
-      emit(CartLoaded(cartProducts: cartModel));
+      final cartProducts = await cartRepo.getCart();
+      emit(CartLoaded(cartProducts: cartProducts));
     } catch (e) {
       emit(CartError(message: e.toString()));
     }
   }
 
   Future<void> addProductToCart({
-    required int userId,
-    required CartItemModel cartItemModel,
+    required ProductModel product,
+    required int quantity,
   }) async {
     try {
-      await cartRepo.addToCart(userId: userId, item: cartItemModel);
-      getCartProducts(userId: userId);
+      await cartRepo.addToCart(quantity: quantity, product: product);
+      getCartProducts();
     } catch (e) {
       emit(CartError(message: e.toString()));
     }
   }
 
   Future<void> removeProductFromCart({
-    required int userId,
     required int productId,
   }) async {
     try {
-      await cartRepo.removeFromCart(userId: userId, productId: productId);
-      getCartProducts(userId: userId);
+      await cartRepo.removeFromCart(productId: productId);
+      getCartProducts();
     } catch (e) {
       emit(CartError(message: e.toString()));
     }
   }
 
   Future<void> updateQuantity({
-    required int userId,
-    required int productId,
+    required CartModel product,
     required int quantity,
   }) async {
     try {
       await cartRepo.updateQuantity(
-        userId: userId,
-        productId: productId,
+        product: product,
         quantity: quantity,
       );
-      getCartProducts(userId: userId);
+      getCartProducts();
     } catch (e) {
       emit(CartError(message: e.toString()));
     }
   }
+
+ 
 }

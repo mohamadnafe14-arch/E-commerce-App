@@ -10,7 +10,7 @@ sealed class CartState extends Equatable {
 final class CartInitial extends CartState {}
 final class CartLoading extends CartState {}
 final class CartLoaded extends CartState {
-  final CartModel cartProducts;
+  final List<CartModel> cartProducts;
   const CartLoaded({required this.cartProducts});
 }
 final class CartError extends CartState {
