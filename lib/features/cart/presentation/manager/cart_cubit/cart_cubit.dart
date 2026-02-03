@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce_app/features/cart/data/models/cart_model.dart';
+import 'package:e_commerce_app/features/cart/data/models/order_model.dart';
 import 'package:e_commerce_app/features/cart/data/repos/cart_repo.dart';
 import 'package:e_commerce_app/features/products/data/models/product_model/product_model.dart';
 import 'package:equatable/equatable.dart';
@@ -57,6 +58,21 @@ class CartCubit extends Cubit<CartState> {
       emit(CartError(message: e.toString()));
     }
   }
-
- 
+  double getTotalPrice() {
+    return cartRepo.getTotalPrice();
+  }
+  void addOrder(OrderModel order) {
+    cartRepo.addOrder(order);
+  }
+  List<OrderModel> getOrders() {
+    return cartRepo.getOrders();
+  }
+  void clearCart() async {
+    try {
+      await cartRepo.clearCart();
+      getCartProducts();
+    } catch (e) {
+      emit(CartError(message: e.toString()));
+    }
+  }
 }

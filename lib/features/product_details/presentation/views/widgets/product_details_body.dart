@@ -1,3 +1,4 @@
+
 import 'package:e_commerce_app/core/styles/text_styles.dart';
 import 'package:e_commerce_app/features/auth/presentation/views/widgets/custom_button.dart';
 import 'package:e_commerce_app/features/cart/presentation/manager/cart_cubit/cart_cubit.dart';
@@ -11,9 +12,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // ignore: must_be_immutable
 class ProductDetailsBody extends StatelessWidget {
-  ProductDetailsBody({super.key, required this.product, required this.pop});
+  ProductDetailsBody({super.key, required this.product, required this.pop, required this.buyNow});
   final ProductModel product;
   final VoidCallback? pop;
+  final VoidCallback buyNow;
   int quantity = 1;
 
   @override
@@ -142,7 +144,16 @@ class ProductDetailsBody extends StatelessWidget {
                   child: CustomButton(
                     text: "Buy Now",
                     onPressed: () {
-                      // Buy now functionality
+                       BlocProvider.of<CartCubit>(
+                        context,
+                      ).addProductToCart(product: product, quantity: quantity);
+                      // ignore: use_build_context_synchronously
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("${product.title} added to cart"),
+                        ),
+                      );
+                      buyNow();
                     },
                     light: false,
                   ),

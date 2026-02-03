@@ -8,6 +8,7 @@ import 'package:e_commerce_app/features/payment/presentation/views/payement_view
 import 'package:e_commerce_app/features/product_details/presentation/views/product_details_view.dart';
 import 'package:e_commerce_app/features/products/data/models/product_model/product_model.dart';
 import 'package:e_commerce_app/features/products/presentation/views/home_view.dart';
+import 'package:e_commerce_app/features/tracking/presentation/views/tracking_view.dart';
 import 'package:e_commerce_app/features/auth/presentation/splash_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
@@ -23,6 +24,7 @@ class AppRouter {
   static const String productDetailsRoute = '/productDetails';
   static const String checkoutRoute = '/checkout';
   static const String paymentRoute = '/payment';
+  static const String trackingRoute = '/tracking';
   static final router = GoRouter(
     routes: [
       GoRoute(
@@ -72,6 +74,12 @@ class AppRouter {
         builder: (context, state) {
           return const PayementView();
         }
+      ),
+      GoRoute(
+        path: trackingRoute,
+        builder: (context, state) {
+          return const TrackingView();
+        },
       ),
     ],
   );

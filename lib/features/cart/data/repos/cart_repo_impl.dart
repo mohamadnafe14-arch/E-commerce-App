@@ -1,9 +1,11 @@
 import 'package:e_commerce_app/features/cart/data/models/cart_model.dart';
+import 'package:e_commerce_app/features/cart/data/models/order_model.dart';
 import 'package:e_commerce_app/features/cart/data/repos/cart_repo.dart';
 import 'package:e_commerce_app/features/products/data/models/product_model/product_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class CartRepoImpl implements CartRepo {
+  List<OrderModel> orders = [];
   @override
   Future<void> addToCart({
     required int quantity,
@@ -48,5 +50,22 @@ class CartRepoImpl implements CartRepo {
       cartItem.quantity = quantity;
       await box.put(product.id, cartItem);
     }
+  }
+  @override
+  double getTotalPrice() {
+    final box = Hive.box<CartModel>('cartBox');
+    double total = 0;
+    for (var item in box.values.toList()) {
+      total += item.price! * item.quantity!;
+    }
+    return total;
+  }
+  @override
+  List<OrderModel> getOrders() {
+    return orders;
+  }
+  @override
+  void addOrder(OrderModel order) {
+    orders.add(order);
   }
 }

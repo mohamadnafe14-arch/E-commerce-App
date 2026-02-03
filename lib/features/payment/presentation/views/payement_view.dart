@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/features/payment/presentation/views/widgets/payment_view_body.dart';
 import 'package:flutter/material.dart';
 
 class PayementView extends StatelessWidget {
@@ -5,6 +6,15 @@ class PayementView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Payment"),
+          centerTitle: true,
+          automaticallyImplyLeading: true,
+        ),
+        body: const PaymentViewBody(),
+      ),
+    );
   }
 }

@@ -64,7 +64,9 @@ class _HomeViewState extends State<HomeView> {
                   color: Colors.grey,
                 ),
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    GoRouter.of(context).push(AppRouter.trackingRoute);
+                  },
                   icon: Icon(FontAwesomeIcons.truck),
                 ),
               ),
