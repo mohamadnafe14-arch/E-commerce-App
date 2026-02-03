@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 class CartItemList extends StatelessWidget {
   const CartItemList({super.key, required this.cartItems});
   final List<CartModel> cartItems;
-
   @override
   Widget build(BuildContext context) {
     return SliverList.builder(

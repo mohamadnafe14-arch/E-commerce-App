@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/core/styles/text_styles.dart';
+import 'package:e_commerce_app/features/auth/presentation/views/widgets/custom_button.dart';
 import 'package:e_commerce_app/features/cart/data/models/cart_model.dart';
 import 'package:e_commerce_app/features/cart/presentation/manager/cart_cubit/cart_cubit.dart';
 import 'package:e_commerce_app/features/product_details/presentation/views/widgets/quantity_counter.dart';
@@ -10,7 +11,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CartItem extends StatelessWidget {
   const CartItem({super.key, required this.cartModel});
   final CartModel cartModel;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -41,6 +41,7 @@ class CartItem extends StatelessWidget {
                 ),
                 SizedBox(height: 5.h),
                 QuantityCounter(
+                  firstQuantity: cartModel.quantity ?? 0,
                   onIncrement: () async {
                     BlocProvider.of<CartCubit>(context).updateQuantity(
                       product: cartModel,
@@ -56,11 +57,25 @@ class CartItem extends StatelessWidget {
                     } else {
                       BlocProvider.of<CartCubit>(
                         context,
-                      ).removeProductFromCart(
-                        productId: cartModel.id!,
-                      );
+                      ).removeProductFromCart(productId: cartModel.id!);
                     }
                   },
+                ),
+                SizedBox(height: 5.h),
+                Row(
+                  children: [
+                    Expanded(
+                      child: CustomButton(
+                        text: "cancel",
+                        light: false,
+                        onPressed: () {
+                          BlocProvider.of<CartCubit>(
+                            context,
+                          ).removeProductFromCart(productId: cartModel.id!);
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

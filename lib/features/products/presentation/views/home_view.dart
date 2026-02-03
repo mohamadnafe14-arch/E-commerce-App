@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/utils/app_router.dart';
 import 'package:e_commerce_app/core/utils/service_locator.dart';
 import 'package:e_commerce_app/features/cart/presentation/views/cart_view.dart';
 import 'package:e_commerce_app/features/products/data/repos/product_repo.dart';
@@ -7,11 +8,13 @@ import 'package:e_commerce_app/features/favourite/presentation/views/widgets/fav
 import 'package:e_commerce_app/features/products/presentation/views/widgets/products_view_body.dart';
 import 'package:e_commerce_app/features/products/presentation/views/widgets/search_product.dart';
 import 'package:e_commerce_app/features/products/presentation/views/widgets/user_info_widget.dart';
+import 'package:e_commerce_app/features/profile/presentation/views/profile_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_icon_class/font_awesome_icon_class.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key, required this.currentUser});
@@ -73,7 +76,12 @@ class _HomeViewState extends State<HomeView> {
               ProductsViewBody(),
               FavouriteProducts(),
               SearchProduct(),
-              CartView(),
+              CartView(
+                onItemClicked: () {
+                  GoRouter.of(context).push(AppRouter.checkoutRoute);
+                },
+              ),
+              ProfileView(),
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(
@@ -103,6 +111,10 @@ class _HomeViewState extends State<HomeView> {
               BottomNavigationBarItem(
                 icon: Icon(Icons.shopping_cart),
                 label: 'Cart',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: 'Profile',
               ),
             ],
           ),

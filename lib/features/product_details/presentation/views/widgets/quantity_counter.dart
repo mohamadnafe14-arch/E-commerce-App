@@ -1,20 +1,21 @@
 import 'package:e_commerce_app/core/styles/text_styles.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class QuantityCounter extends StatefulWidget {
-  const QuantityCounter({
+  QuantityCounter({
     super.key,
     required this.onIncrement,
     required this.onDecrement,
+    required this.firstQuantity,
   });
   final VoidCallback? onIncrement, onDecrement;
-
+  int firstQuantity;
   @override
   State<QuantityCounter> createState() => _QuantityCounterState();
 }
 
 class _QuantityCounterState extends State<QuantityCounter> {
-  int quantity = 1;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -22,9 +23,9 @@ class _QuantityCounterState extends State<QuantityCounter> {
         GestureDetector(
           onTap: () {
             widget.onDecrement!();
-            if (quantity > 1) {
+            if (widget.firstQuantity > 1) {
               setState(() {
-                quantity--;
+                widget.firstQuantity--;
               });
             }
           },
@@ -37,7 +38,7 @@ class _QuantityCounterState extends State<QuantityCounter> {
         ),
         SizedBox(width: 10),
         Text(
-          quantity.toString(),
+          widget.firstQuantity.toString(),
           style: TextStyles.textStyle16Regular(Colors.black),
         ),
         SizedBox(width: 10),
@@ -45,7 +46,7 @@ class _QuantityCounterState extends State<QuantityCounter> {
           onTap: () {
             widget.onIncrement!();
             setState(() {
-              quantity++;
+              widget.firstQuantity++;
             });
           },
           child: Container(

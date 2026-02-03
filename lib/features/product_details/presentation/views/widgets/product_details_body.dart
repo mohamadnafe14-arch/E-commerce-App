@@ -44,6 +44,7 @@ class ProductDetailsBody extends StatelessWidget {
             ),
             SizedBox(height: 10.h),
             QuantityCounter(
+              firstQuantity: 1,
               onIncrement: () {
                 quantity++;
               },
@@ -122,16 +123,13 @@ class ProductDetailsBody extends StatelessWidget {
                     text: "Add to Cart",
                     onPressed: () async {
                       // ignore: use_build_context_synchronously
-                      BlocProvider.of<CartCubit>(context).addProductToCart(
-                        product: product,
-                        quantity: quantity,
-                      );
+                      BlocProvider.of<CartCubit>(
+                        context,
+                      ).addProductToCart(product: product, quantity: quantity);
                       // ignore: use_build_context_synchronously
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text(
-                            "${product.title} added to cart",
-                          ),
+                          content: Text("${product.title} added to cart"),
                         ),
                       );
                       pop!();
