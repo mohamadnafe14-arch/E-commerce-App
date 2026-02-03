@@ -4,6 +4,7 @@ import 'package:e_commerce_app/features/auth/presentation/page_view_builder_view
 import 'package:e_commerce_app/features/auth/presentation/views/auth_determinator_view.dart';
 import 'package:e_commerce_app/features/auth/presentation/views/forget_password_view.dart';
 import 'package:e_commerce_app/features/checkout/presentation/views/checkout_view.dart';
+import 'package:e_commerce_app/features/payment/presentation/views/payement_view.dart';
 import 'package:e_commerce_app/features/product_details/presentation/views/product_details_view.dart';
 import 'package:e_commerce_app/features/products/data/models/product_model/product_model.dart';
 import 'package:e_commerce_app/features/products/presentation/views/home_view.dart';
@@ -21,6 +22,7 @@ class AppRouter {
   static const String forgetPasswordRoute = '/forgetPassword';
   static const String productDetailsRoute = '/productDetails';
   static const String checkoutRoute = '/checkout';
+  static const String paymentRoute = '/payment';
   static final router = GoRouter(
     routes: [
       GoRoute(
@@ -64,6 +66,12 @@ class AppRouter {
         builder: (context, state) {
           return const CheckoutView();
         },
+      ),
+      GoRoute(
+        path: paymentRoute,
+        builder: (context, state) {
+          return const PayementView();
+        }
       ),
     ],
   );
