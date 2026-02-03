@@ -3,7 +3,7 @@ import 'package:e_commerce_app/features/cart/presentation/views/cart_view.dart';
 import 'package:e_commerce_app/features/products/data/repos/product_repo.dart';
 import 'package:e_commerce_app/features/products/presentation/manager/all_products_cubit/all_products_cubit.dart';
 import 'package:e_commerce_app/features/products/presentation/manager/best_seller_cubit/best_seller_cubit.dart';
-import 'package:e_commerce_app/features/products/presentation/views/widgets/favourite_products.dart';
+import 'package:e_commerce_app/features/favourite/presentation/views/widgets/favourite_products.dart';
 import 'package:e_commerce_app/features/products/presentation/views/widgets/products_view_body.dart';
 import 'package:e_commerce_app/features/products/presentation/views/widgets/search_product.dart';
 import 'package:e_commerce_app/features/products/presentation/views/widgets/user_info_widget.dart';
