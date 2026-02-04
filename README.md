@@ -388,8 +388,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👨‍💻 Author
 
-**Mohamed Ahmed**
-- Email: ahmed.759850@gmail.com
+**Mohamed Nafe**
+- Email: mohamadnafe14@gmail.com
 - GitHub: [@mohamadnafe14-arch](https://github.com/mohamadnafe14-arch)
 
 ---
